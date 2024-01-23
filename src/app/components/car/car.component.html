@@ -21,6 +21,7 @@
             <th>Kdv'li Fiyat</th>
             <th>Tanim</th>
             <th>Urun Adedi</th>
+            <th></th>
 
             
 
@@ -28,17 +29,22 @@
         </tr>
 
     </thead>
-    <tr *ngFor="let car of cars |filterPipe:filterText">
-        <td>{{car.carId}}</td>
-        <td>{{car.brandId}}</td>
-        <td>{{car.colorId}}</td>
-        <td>{{car.carName |lowercase}}</td>
-        <td>{{car.modelYear}}</td>
-        <td>{{car.dailyPrice|currency}}</td>
-        <td>{{car.dailyPrice |vatAdded:20}}</td>
 
-        <td>{{car.description}}</td>
-        <td>{{car.unitsInStock}}</td>
+    <tbody>
+        <tr *ngFor="let car of cars |filterPipe:filterText">
+            <td>{{car.carId}}</td>
+            <td>{{car.brandId}}</td>
+            <td>{{car.colorId}}</td>
+            <td>{{car.carName |lowercase}}</td>
+            <td>{{car.modelYear}}</td>
+            <td>{{car.dailyPrice|currency}}</td>
+            <td>{{car.dailyPrice |vatAdded:20}}</td>
+            <td>{{car.description}}</td>
+            <td>{{car.unitsInStock}}</td>
+            <td> <button (click)="addToCart(car)" type="button" class="btn btn-success"> Sepete ekle</button></td>
+    
+        </tr>
+    </tbody>
 
-    </tr>
+    
 </table>

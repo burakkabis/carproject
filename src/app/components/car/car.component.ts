@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Car } from '../../models/car';
 import { response } from 'express';
 import { CarService } from '../../services/car.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-car',
   templateUrl: './car.component.html',
@@ -9,15 +10,32 @@ import { CarService } from '../../services/car.service';
 })
 export class CarComponent implements OnInit {
   cars:Car[]=[];
-  constructor(private carService:CarService){}
+
+  filterText="";
+  constructor(private carService:CarService,private activatedRoute:ActivatedRoute){}
   
   ngOnInit():void {
+    this.activatedRoute.params.subscribe(params=>{
+      if(params["brandId"]){
+        this.getCarsByBrandId(params["brandId"])
+      }
+      else
+      {
+        this.getCars()
+      }
+    })
 
-    this.getCars()
   }
   getCars(){
 
     this.carService.getCars().subscribe(response =>{
+      this.cars=response.data
+    })
+  }
+
+  getCarsByBrandId(brandId:number){
+
+    this.carService.getCarsByBrandId(brandId).subscribe(response =>{
       this.cars=response.data
     })
   }

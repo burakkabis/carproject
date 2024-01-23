@@ -1,14 +1,26 @@
+<div class="mb-3">
+    <label for="filterText" class="form-label">Araba ara</label>
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" 
+    placeholder="arama ifadesi giriniz">
+  </div>
+
+  <div *ngIf="filterText" class="alert alert-success">
+    {{filterText}} aradiniz
+
+  </div>
+
 <table class="table"> 
     <thead>
         <tr>
             <th>Id</th>
             <th>BrandId</th>
             <th>ColorId</th>
-            <th>CarName</th>
-            <th>ModelYear</th>
-            <th>Daily Price</th>
-            <th>Description</th>
-            <th>Units In Stock</th>
+            <th>Araba Ismi </th>
+            <th>Model Yili</th>
+            <th>Gunluk Fiyat</th>
+            <th>Kdv'li Fiyat</th>
+            <th>Tanim</th>
+            <th>Urun Adedi</th>
 
             
 
@@ -16,13 +28,15 @@
         </tr>
 
     </thead>
-    <tr *ngFor="let car of cars">
+    <tr *ngFor="let car of cars |filterPipe:filterText">
         <td>{{car.carId}}</td>
         <td>{{car.brandId}}</td>
         <td>{{car.colorId}}</td>
-        <td>{{car.carName}}</td>
+        <td>{{car.carName |lowercase}}</td>
         <td>{{car.modelYear}}</td>
-        <td>{{car.dailyPrice}}</td>
+        <td>{{car.dailyPrice|currency}}</td>
+        <td>{{car.dailyPrice |vatAdded:20}}</td>
+
         <td>{{car.description}}</td>
         <td>{{car.unitsInStock}}</td>
 

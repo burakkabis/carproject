@@ -4,6 +4,7 @@ import { response } from 'express';
 import { CarService } from '../../services/car.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-car',
   templateUrl: './car.component.html',
@@ -13,7 +14,10 @@ export class CarComponent implements OnInit {
   cars:Car[]=[];
 
   filterText="";
-  constructor(private carService:CarService,private activatedRoute:ActivatedRoute,private toastrService:ToastrService){}
+  constructor(private carService:CarService
+    ,private activatedRoute:ActivatedRoute
+    ,private toastrService:ToastrService
+    ,private cartService:CartService){}
   
   ngOnInit():void {
     this.activatedRoute.params.subscribe(params=>{
@@ -49,7 +53,7 @@ export class CarComponent implements OnInit {
     else
     {
       this.toastrService.success("Sepete eklendi",car.carName)
-
+      this.cartService.addToCart(car);  
     }
   }
 

@@ -46,15 +46,15 @@ export class CarComponent implements OnInit {
   }
 
   addToCart(car:Car){
-    if(car.carId==100)
-    {
-      this.toastrService.error("Hata","Bu urun eklenemez")
-    }
-    else
-    {
+    // if(car.carId==100)
+    // {
+    //   this.toastrService.error("Hata","Bu urun eklenemez")
+    // }
+   // else
+    //{
       this.toastrService.success("Sepete eklendi",car.carName)
       this.cartService.addToCart(car);  
-    }
+    //}
   }
 
 }

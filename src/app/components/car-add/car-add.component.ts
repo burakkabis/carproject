@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,FormControl,Validators } from '@angular/forms';
+import { CarService } from '../../services/car.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-car-add',
@@ -9,7 +11,7 @@ import { FormGroup,FormBuilder,FormControl,Validators } from '@angular/forms';
 export class CarAddComponent implements OnInit {
 
   carAddForm:FormGroup
-  constructor(private formBuilder:FormBuilder){}
+  constructor(private formBuilder:FormBuilder,private carService:CarService,private toastrService:ToastrService){}
 
   ngOnInit(): void {
     
@@ -32,5 +34,25 @@ export class CarAddComponent implements OnInit {
   }
 
 
+  add(){
+    if(this.carAddForm.valid){
+         let carModule= Object.assign({},this.carAddForm.value) 
+         this.carService.add(carModule).subscribe(response=>{
+          console.log(removeEventListener)
+          this.toastrService.success(response.message,"başarılı")
+         },responseError=>{
+          if(responseError.error.Errors.lenght>0){
+            for (let i =0; i < responseError.error.Errors.lenght;i++ ) {
+               this.toastrService.error(responseError.error.Errors[i].ErrorMessage,"Doğrulama hatası")
+            }
+          }
+         })
+         
+    }else{
+      this.toastrService.error("Formunuz eksik","dikkat")
+    }
+
+
+  }
 
 }
